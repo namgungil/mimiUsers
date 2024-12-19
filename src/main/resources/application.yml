@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: mimi
+    name: users
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -31,3 +31,10 @@ logging:
           descriptor:
             sql: trace
 
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      #      defaultZone: http://192.168.0.7:8761/eureka
+      defaultZone: http://127.0.0.1:5677/eureka

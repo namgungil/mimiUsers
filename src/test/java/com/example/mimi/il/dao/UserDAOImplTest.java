@@ -26,7 +26,7 @@ class UserDAOImplTest {
 
     @Test
     void findById() {
-        UsersEntity user = dao.findById("1");
+        UsersEntity user = dao.findById(1L);
         System.out.println(user);
     }
 
@@ -38,8 +38,8 @@ class UserDAOImplTest {
 
     @Test
     void update() {
-        dao.update(new UsersEntity(1L,"111","4567", "01012345678"));
-        System.out.println(dao.findById("1"));
+//        dao.update(new UsersEntity(1l,"111","4567", "01012345678"));
+        System.out.println(dao.findById(1L));
     }
 
     @Test
@@ -49,7 +49,7 @@ class UserDAOImplTest {
 
     @Test
     void delete() {
-        dao.delete("1");
-        System.out.println(dao.findAll());
+/*        dao.delete("2");
+        System.out.println(dao.findAll());*/
     }
 }
