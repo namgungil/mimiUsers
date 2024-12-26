@@ -6,34 +6,31 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @Table(name = "users")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UsersEntity extends DateEntity {
+public class User extends DateEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
-    //@Column(nullable = false)
+    @Column(nullable = false)
     private String userName;
-    //@Column(nullable = false)
+    @Column(nullable = false, unique=true)
     private String email;
-    //@Column(nullable = false)
+    @Column(nullable = false)
     private String password;
     // default 값은 null이고 관리자계정에서 설정으로만 바꿀수 있음
-    //@Column(nullable = false)
+    @Column(nullable = false)
     private Boolean role = false;
-    //@Column(nullable = false)
+    @Column(nullable = false)
     private String phoneNum;
 
 
 
     // 생성용
-    public UsersEntity(String userName, String email, String password, String phoneNum) {
+    public User(String userName, String email, String password, String phoneNum) {
         this.userName = userName;
         this.email = email;
         this.password = password;
@@ -41,7 +38,7 @@ public class UsersEntity extends DateEntity {
     }
 
     // 수정용(email은 변경 불가)
-    public UsersEntity(Long userId, String userName, String password, String phoneNum) {
+    public User(Long userId, String userName, String password, String phoneNum) {
         this.userId = userId;
         this.userName = userName;
         this.password = password;
@@ -49,7 +46,7 @@ public class UsersEntity extends DateEntity {
     }
 
     // 관리자가 유저 role 변경
-    public UsersEntity(Long userId, Boolean role) {
+    public User(Long userId, Boolean role) {
         this.role = role;
         this.userId = userId;
     }

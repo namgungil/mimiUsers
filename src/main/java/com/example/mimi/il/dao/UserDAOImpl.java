@@ -1,52 +1,63 @@
 package com.example.mimi.il.dao;
 
-import com.example.mimi.il.entity.UsersEntity;
-import jakarta.persistence.EntityManager;
+import com.example.mimi.il.dto.UserDTO;
+import com.example.mimi.il.dto.UserDeleteDTO;
+import com.example.mimi.il.dto.UserRoleDTO;
+import com.example.mimi.il.entity.User;
+import com.example.mimi.il.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
 public class UserDAOImpl implements UserDAO {
-    private final EntityManager em;
+    private final UserRepository repository;
+
+    @Override
+    public User login(String email, String password) {
+        return repository.findByEmailAndPassword(email, password);
+    }
 
     // 생성
     @Override
-    public void insert(UsersEntity dto) {
-        em.persist(dto);
+    public void insert(User userE) {
+        repository.save(userE);
     }
 
     @Override
-    public UsersEntity findById(String userId) {
-        return em.find(UsersEntity.class, Long.parseLong(userId));
+    public Optional<User> findById(Long userId) {
+        return repository.findById(userId);
     }
 
     @Override
-    public List<UsersEntity> findAll() {
-        List<UsersEntity> list =
-                em.createQuery("select u from UsersEntity u", UsersEntity.class).getResultList();
-        return list;
+    public List<User> findAll() {
+        return repository.findAll();
     }
 
     @Override
-    public void update(UsersEntity dto) {
-        UsersEntity updateuser = em.find(UsersEntity.class, dto.getUserId());
-        updateuser.setUserName(dto.getUserName());
-        updateuser.setPassword(dto.getPassword());
-        updateuser.setPhoneNum(dto.getPhoneNum());
+    public void update(User user) {
+        Optional<User> updateuser = repository.findById(user.getUserId());
+//        System.out.println(updateuser);
+//        System.out.println();
+        updateuser.get().setUserName(user.getUserName());
+        updateuser.get().setPassword(user.getPassword());
+        updateuser.get().setPhoneNum(user.getPhoneNum());
+//        System.out.println(updateuser+ "-----------------------------");
     }
 
     @Override
-    public void delete(String userId) {
-        UsersEntity user = em.find(UsersEntity.class, Long.parseLong(userId));
-        em.remove(user);
+    public void delete(User user) {
+//        System.out.println(dto + "===============================");
+        User deleteUser = repository.findById(user.getUserId()).get();
+        repository.delete(deleteUser);
     }
 
     @Override
-    public void adminUpdate(UsersEntity dto) {
-        UsersEntity adminupdate = em.find(UsersEntity.class, dto.getUserId());
-        adminupdate.setRole(dto.getRole());
+    public void adminUpdate(User user) {
+        Optional<User> adminupdate = repository.findById(user.getUserId());
+        adminupdate.get().setRole(user.getRole());
     }
 }

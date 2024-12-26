@@ -1,6 +1,11 @@
 server:
   port: 5679
 
+#토큰의 시크릿키와 유효시간을 설정파일에 정의
+jwt:
+  secret: mimiproject
+  token-valid-in-millisecond: 600000
+
 spring:
   application:
     name: mimi-users
@@ -31,3 +36,10 @@ logging:
           descriptor:
             sql: trace
 
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      #      defaultZone: http://192.168.0.7:8761/eureka
+      defaultZone: http://127.0.0.1:5677/eureka

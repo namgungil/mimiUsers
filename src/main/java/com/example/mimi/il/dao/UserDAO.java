@@ -1,21 +1,27 @@
 package com.example.mimi.il.dao;
 
-import com.example.mimi.il.entity.UsersEntity;
+import com.example.mimi.il.dto.UserDTO;
+import com.example.mimi.il.dto.UserDeleteDTO;
+import com.example.mimi.il.dto.UserRoleDTO;
+import com.example.mimi.il.entity.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserDAO {
+    // 로그인
+    User login(String email, String password);
     // 생성
-    void insert(UsersEntity dto);
+    void insert(User dto);
     // 검색
-    UsersEntity findById(String userId);
+    Optional<User> findById(Long userId);
     // 전체검색
-    List<UsersEntity> findAll();
+    List<User> findAll();
     // 수정
-    void update(UsersEntity dto);
+    void update(User user);
     // 관리자 권한 수정
-    void adminUpdate(UsersEntity dto);
+    void adminUpdate(User user);
     // 삭제
-    void delete(String userId);
+    void delete(User user);
 
 }
