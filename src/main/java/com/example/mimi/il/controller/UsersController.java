@@ -33,7 +33,8 @@ public class UsersController {
             String mytoken = Jwts.builder()
                     // 사용자정의 클레임
                     .addClaims(Map.of("email",login.getEmail(),"password",login.getPassword()))
-                    .setExpiration(new Date(System.currentTimeMillis() + environment.getProperty("jwt.token-valid-in-millisecond")))
+                    .setExpiration(new Date(System.currentTimeMillis() +
+                            Long.parseLong(environment.getProperty("jwt.token-valid-in-millisecond"))))
                     .signWith(SignatureAlgorithm.HS512, environment.getProperty("jwt.secret"))
                     .compact(); // 위의 정보들을 이용해서 토큰을 생성
             // response의 해더에 셋팅
