@@ -1,6 +1,7 @@
 package com.example.mimi.il.dao;
 
-import com.example.mimi.il.entity.UsersEntity;
+import com.example.mimi.il.dto.UserRoleDTO;
+import com.example.mimi.il.entity.User;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 @Transactional
@@ -18,21 +20,21 @@ class UserDAOImplTest {
 
     @Test
     void insert() {
-        dao.insert(new UsersEntity("남궁일", "il1358@naver.com", "1234", "01033744108"));
-        dao.insert(new UsersEntity("il", "il1358@gmail.com", "2345", "01098765432"));
+        dao.insert(new User("남궁일", "il1358@naver.com", "1234", "01033744108"));
+        dao.insert(new User("il", "il1358@gmail.com", "2345", "01098765432"));
     }
 
 
 
     @Test
     void findById() {
-        UsersEntity user = dao.findById(1L);
+        Optional<User> user = dao.findById(1L);
         System.out.println(user);
     }
 
     @Test
     void findAll() {
-        List<UsersEntity> list = dao.findAll();
+        List<User> list = dao.findAll();
         System.out.println(list);
     }
 
@@ -44,7 +46,7 @@ class UserDAOImplTest {
 
     @Test
     void adminUpdate() {
-        dao.adminUpdate(new UsersEntity(2L, true));
+        dao.adminUpdate(new User(2L, true));
     }
 
     @Test
