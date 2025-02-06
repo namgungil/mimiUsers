@@ -32,7 +32,7 @@ public class UsersController {
         if (login != null) {  // 인증이 성공
             String mytoken = Jwts.builder()
                     // 사용자정의 클레임
-                    .addClaims(Map.of("email",login.getEmail(),"password",login.getPassword()))
+                    .addClaims(Map.of("email",login.getEmail(),"password",login.getPassword(),"userName",login.getUserName(),"role",login.getRole()))
                     .setExpiration(new Date(System.currentTimeMillis() +
                             Long.parseLong(environment.getProperty("jwt.token-valid-in-millisecond"))))
                     .signWith(SignatureAlgorithm.HS512, environment.getProperty("jwt.secret"))
@@ -40,6 +40,8 @@ public class UsersController {
             // response의 해더에 셋팅
             response.setHeader("Authorization", mytoken);
             response.setHeader("userId", String.valueOf(login.getUserId()));
+            response.setHeader("role", String.valueOf(login.getRole()));
+
         }
 
         return login;
